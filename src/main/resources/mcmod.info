@@ -1,0 +1,18 @@
+[
+{
+  "modid": "cosmicreality",
+  "name": "CosmicReality",
+  "description": "WIP",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Tamaized"],
+  "credits": "Tamaized",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": [ "forge@[${fVersion},)", "tammodized@[${tamVersion},)" ],
+  "requiredMods": [ "forge@[${fVersion},)", "tammodized@[${tamVersion},)" ],
+  "useDependencyInformation": true
+}
+]
