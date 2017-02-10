@@ -1,20 +1,17 @@
 package Tamaized.CosmicReality.client.event;
 
-import java.util.Random;
-
 import org.lwjgl.opengl.GL11;
 
-import Tamaized.TamModized.TamModized;
+import Tamaized.CosmicReality.capabilities.CapabilityList;
+import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityHandler;
+import Tamaized.CosmicReality.capabilities.cosmic.ICosmicCapability;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -30,68 +27,26 @@ public class RenderPlayer {
 		GL11.glPushMatrix();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 
-		GlStateManager.rotate(-player.prevRenderYawOffset + 180, 0, 1, 0);
+		GlStateManager.rotate(-player.prevRenderYawOffset, 0, 1, 0);
 		GL11.glTranslated(-player.posX, -player.posY, -player.posZ);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 
-		float length = 0.3F;
+		ICosmicCapability cap = player.getCapability(CapabilityList.COSMIC, null);
+		if (cap != null) {
+			/*
+			 * Vec3d pos7_1 = player.getPositionVector().addVector(-0.3F, 0.75F, -0.39); Vec3d pos7_2 = pos7_1.addVector(length, length, length); Vec3d pos7_3 = pos7_2.addVector(length, -length, 0); Vec3d pos7_4 = pos7_3.addVector(0, -length, 0); Vec3d pos8_1 = player.getPositionVector().addVector(-0.7F, 0.75F, -0.39); Vec3d pos8_2 = pos8_1.addVector(-length, length, length); Vec3d pos8_3 = pos8_2.addVector(-length, -length, 0); Vec3d pos8_4 = pos8_3.addVector(0, -length, 0);
+			 */
 
-		Vec3d pos1_1 = player.getPositionVector().addVector(-0.3F, 1.35F, -0.39);
-		Vec3d pos1_2 = pos1_1.addVector(length, length, length);
-		Vec3d pos1_3 = pos1_2.addVector(length, -length, 0);
-		Vec3d pos1_4 = pos1_3.addVector(0, -length, 0);
+			for (CosmicCapabilityHandler.WingVector vec : cap.getWingList()) {
+				vec.update();
+				if (vec.getParent() != null){
+					
+					drawLineWithGL(player.getPositionVector().add(vec.getParent().getRenderVector()), player.getPositionVector().add(vec.getRenderVector()));
+				}
+			}
 
-		Vec3d pos2_1 = player.getPositionVector().addVector(-0.7F, 1.35F, -0.39);
-		Vec3d pos2_2 = pos2_1.addVector(-length, length, length);
-		Vec3d pos2_3 = pos2_2.addVector(-length, -length, 0);
-		Vec3d pos2_4 = pos2_3.addVector(0, -length, 0);
-
-		Vec3d pos3_1 = player.getPositionVector().addVector(-0.3F, 1.15F, -0.39);
-		Vec3d pos3_2 = pos3_1.addVector(length, length, length);
-		Vec3d pos3_3 = pos3_2.addVector(length, -length, 0);
-		Vec3d pos3_4 = pos3_3.addVector(0, -length, 0);
-
-		Vec3d pos4_1 = player.getPositionVector().addVector(-0.7F, 1.15F, -0.39);
-		Vec3d pos4_2 = pos4_1.addVector(-length, length, length);
-		Vec3d pos4_3 = pos4_2.addVector(-length, -length, 0);
-		Vec3d pos4_4 = pos4_3.addVector(0, -length, 0);
-
-		Vec3d pos5_1 = player.getPositionVector().addVector(-0.3F, 0.95F, -0.39);
-		Vec3d pos5_2 = pos5_1.addVector(length, length, length);
-		Vec3d pos5_3 = pos5_2.addVector(length, -length, 0);
-		Vec3d pos5_4 = pos5_3.addVector(0, -length, 0);
-
-		Vec3d pos6_1 = player.getPositionVector().addVector(-0.7F, 0.95F, -0.39);
-		Vec3d pos6_2 = pos6_1.addVector(-length, length, length);
-		Vec3d pos6_3 = pos6_2.addVector(-length, -length, 0);
-		Vec3d pos6_4 = pos6_3.addVector(0, -length, 0);
-		/*
-		 * Vec3d pos7_1 = player.getPositionVector().addVector(-0.3F, 0.75F, -0.39); Vec3d pos7_2 = pos7_1.addVector(length, length, length); Vec3d pos7_3 = pos7_2.addVector(length, -length, 0); Vec3d pos7_4 = pos7_3.addVector(0, -length, 0); Vec3d pos8_1 = player.getPositionVector().addVector(-0.7F, 0.75F, -0.39); Vec3d pos8_2 = pos8_1.addVector(-length, length, length); Vec3d pos8_3 = pos8_2.addVector(-length, -length, 0); Vec3d pos8_4 = pos8_3.addVector(0, -length, 0);
-		 */
-		drawLineWithGL(pos1_1, pos1_2);
-		drawLineWithGL(pos1_2, pos1_3);
-		drawLineWithGL(pos1_3, pos1_4);
-
-		drawLineWithGL(pos2_1, pos2_2);
-		drawLineWithGL(pos2_2, pos2_3);
-		drawLineWithGL(pos2_3, pos2_4);
-
-		drawLineWithGL(pos3_1, pos3_2);
-		drawLineWithGL(pos3_2, pos3_3);
-		drawLineWithGL(pos3_3, pos3_4);
-
-		drawLineWithGL(pos4_1, pos4_2);
-		drawLineWithGL(pos4_2, pos4_3);
-		drawLineWithGL(pos4_3, pos4_4);
-
-		drawLineWithGL(pos5_1, pos5_2);
-		drawLineWithGL(pos5_2, pos5_3);
-		drawLineWithGL(pos5_3, pos5_4);
-
-		drawLineWithGL(pos6_1, pos6_2);
-		drawLineWithGL(pos6_2, pos6_3);
-		drawLineWithGL(pos6_3, pos6_4);
+		}
 		/*
 		 * drawLineWithGL(pos7_1, pos7_2); drawLineWithGL(pos7_2, pos7_3); drawLineWithGL(pos7_3, pos7_4); drawLineWithGL(pos8_1, pos8_2); drawLineWithGL(pos8_2, pos8_3); drawLineWithGL(pos8_3, pos8_4);
 		 */
@@ -111,9 +66,9 @@ public class RenderPlayer {
 		float ox = (blockA.zCoord - blockB.zCoord == 0 ? 0 : 1f / 16f);
 		GL11.glBegin(GL11.GL_LINE_STRIP);
 
-		GL11.glColor3f(1, 0, 0);
-
+		GlStateManager.color(1, 0, 0, 1);
 		GL11.glVertex3d(blockA.xCoord + 0.5, blockA.yCoord - 0.01, blockA.zCoord + 0.5);
+		GlStateManager.color(0, 0, 1, 1);
 		GL11.glVertex3d(blockB.xCoord + 0.5, blockB.yCoord - 0.01, blockB.zCoord + 0.5);
 
 		GL11.glEnd();

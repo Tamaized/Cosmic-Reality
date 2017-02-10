@@ -5,11 +5,18 @@ import java.io.File;
 import org.apache.logging.log4j.LogManager;
 
 import Tamaized.CosmicReality.GUI.GuiHandler;
+import Tamaized.CosmicReality.capabilities.AttachCapabilityEvent;
+import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityHandler;
+import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityStorage;
+import Tamaized.CosmicReality.capabilities.cosmic.ICosmicCapability;
+import Tamaized.CosmicReality.event.PlayerTickEvent;
 import Tamaized.CosmicReality.handler.ConfigHandler;
 import Tamaized.CosmicReality.network.ServerPacketHandler;
 import Tamaized.TamModized.TamModBase;
 import Tamaized.TamModized.TamModized;
 import Tamaized.TamModized.proxy.AbstractProxy;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -70,8 +77,8 @@ public class CosmicReality extends TamModBase {
 		super.preInit(event);
 
 		// Register Capabilities
-		// CapabilityManager.INSTANCE.register(IStarForgeCapability.class, new StarForgeCapabilityStorage(), StarForgeCapabilityHandler.class);
-		// MinecraftForge.EVENT_BUS.register(new Tamaized.Voidcraft.capabilities.EventHandler());
+		CapabilityManager.INSTANCE.register(ICosmicCapability.class, new CosmicCapabilityStorage(), CosmicCapabilityHandler.class);
+		MinecraftForge.EVENT_BUS.register(new AttachCapabilityEvent());
 
 		// Proxy Stuff
 		proxy.preInit();
@@ -91,7 +98,7 @@ public class CosmicReality extends TamModBase {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
 		// Register Events
-		// MinecraftForge.EVENT_BUS.register(new LitStrikeEvent());
+		MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
 
 		// Register Projectiles and other misc entities
 		// registerEntity(VoidChain.class, "VoidChain", this, modid, 128, 1, true);
