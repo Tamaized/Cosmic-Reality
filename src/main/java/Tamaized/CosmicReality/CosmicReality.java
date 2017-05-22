@@ -28,7 +28,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-@Mod(modid = CosmicReality.modid, name = "CosmicReality", guiFactory = "Tamaized.CosmicReality.GUI.client.GUIConfigFactory", version = CosmicReality.version, dependencies = "required-before:" + TamModized.modid + "@[" + TamModized.version + ",)")
+@Mod(modid = CosmicReality.modid, name = "CosmicReality", guiFactory = "Tamaized.CosmicReality.GUI.client.GUIConfigFactory", version = CosmicReality.version, dependencies = "required-before:" + TamModized.modid + "@[${tamversion},)")
 public class CosmicReality extends TamModBase {
 
 	public static final boolean isDevBuild = true;
