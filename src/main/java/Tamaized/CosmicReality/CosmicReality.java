@@ -2,8 +2,6 @@ package Tamaized.CosmicReality;
 
 import java.io.File;
 
-import org.apache.logging.log4j.LogManager;
-
 import Tamaized.CosmicReality.GUI.GuiHandler;
 import Tamaized.CosmicReality.capabilities.AttachCapabilityEvent;
 import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityHandler;
@@ -53,94 +51,62 @@ public class CosmicReality extends TamModBase {
 	public static AbstractProxy proxy;
 
 	@Override
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = LogManager.getLogger("CosmicReality");
+	protected AbstractProxy getProxy() {
+		return proxy;
+	}
 
+	@Override
+	public String getModID() {
+		return modid;
+	}
+
+	@Override
+	@EventHandler
+	public void FMLpreInit(FMLPreInitializationEvent event) {
+		super.FMLpreInit(event);
+	}
+
+	@Override
+	@EventHandler
+	public void FMLinit(FMLInitializationEvent event) {
+		super.FMLinit(event);
+	}
+
+	@Override
+	@EventHandler
+	public void FMLpostInit(FMLPostInitializationEvent event) {
+		super.FMLpostInit(event);
+	}
+
+	@Override
+	public void preInit(FMLPreInitializationEvent event) {
 		logger.info("Starting CosmicReality PreInit");
 
 		configFile = event.getSuggestedConfigurationFile();
 		config = new ConfigHandler(new Configuration(configFile));
 
-		// Initialize Network
 		channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(networkChannelName);
 
-		// proxy.preRegisters();
-
-		// yo dawg, Register the Registers... i'm sorry
-		// register(particles = new VoidCraftParticles());
-
-		// Register Sounds Events
-		// VoidSoundEvents.register();
-
-		// Super here to start register stuff
-		super.preInit(event);
-
-		// Register Capabilities
 		CapabilityManager.INSTANCE.register(ICosmicCapability.class, new CosmicCapabilityStorage(), CosmicCapabilityHandler.class);
 		MinecraftForge.EVENT_BUS.register(new AttachCapabilityEvent());
 
-		// Proxy Stuff
-		proxy.preInit();
 	}
 
 	@Override
-	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		logger.info("Starting CosmicReality Init");
 
-		super.init(event);
-
-		// Tile Entities
-		// GameRegistry.registerTileEntity(TileEntityStarForge.class, "tileEntityStarForge");
-
-		// GUI Handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
-		// Register Events
 		MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
-
-		// Register Projectiles and other misc entities
-		// registerEntity(VoidChain.class, "VoidChain", this, modid, 128, 1, true);
-		// registerEntity(EntitySpellImplosion.class, "EntitySpellImplosion", this, modid, 64, 1, true);
-
-		// Register Dimensions
-		// DimensionManager.registerDimension(config.getDimensionIDvoid(), DimensionType.register("The Void", "_void", config.getDimensionIDvoid(), WorldProviderVoid.class, false));
-		// DimensionManager.registerDimension(config.getDimensionIDxia(), DimensionType.register("???", "_xia", config.getDimensionIDxia(), WorldProviderXia.class, false));
-
-		// Register World Gen
-		// GameRegistry.registerWorldGenerator(new WorldGeneratorVoid(), 0);
-
-		// MapGenStructureIO.registerStructure(MapGenVoidFortress.Start.class, "VoidFortress");
-		// StructureVoidFortressPieces.registerNetherFortressPieces();
-
-		// Register Mobs
-		// registerEntity(EntityCompanionFireElemental.class, "FireElemental", this, modid, 64, 1, true);
-
-		// Register Biomes
-		// Biome.getBiome(6).getSpawnableList(EnumCreatureType.MONSTER).add(new SpawnListEntry(EntityMobLich.class, 10, 0, 1));
-
-		// if(thaumcraftIntegration != null) thaumcraftIntegration.init();
-
-		// Proxy Stuff
-		proxy.init();
 
 	}
 
 	@Override
-	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
 		logger.info("Starting CosmicReality PostInit");
 
-		super.postInit(e);
-
-		// Register Network
 		channel.register(new ServerPacketHandler());
-
-		// Proxy Stuff
-		proxy.postInit();
-		// if(thaumcraftIntegration != null) thaumcraftIntegration.postInit();
-
 	}
 
 }
