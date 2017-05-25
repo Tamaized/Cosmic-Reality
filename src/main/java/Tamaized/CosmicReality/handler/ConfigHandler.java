@@ -1,50 +1,34 @@
 package Tamaized.CosmicReality.handler;
 
+import java.io.File;
 import java.io.IOException;
 
 import Tamaized.CosmicReality.CosmicReality;
+import Tamaized.TamModized.TamModBase;
+import Tamaized.TamModized.config.AbstractConfigHandler;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class ConfigHandler {
+public class ConfigHandler extends AbstractConfigHandler {
 
-	private Configuration config;
-
-	public ConfigHandler(Configuration c) {
-		config = c;
-		config.load();
-		sync(true);
+	public ConfigHandler(TamModBase instance, File file, Configuration c) {
+		super(instance, file, c);
 	}
 
-	public Configuration getConfig() {
-		return config;
-	}
-
-	public void sync(boolean firstLoad) {
-		try {
-			loadData(firstLoad);
-			cleanupFile();
-			config.save();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void loadData(boolean firstLoad) {
+	@Override
+	protected void init() {
 
 	}
 
-	private void cleanupFile() throws IOException {
-		CosmicReality.configFile.delete();
-		CosmicReality.configFile.createNewFile();
-		config = new Configuration(CosmicReality.configFile);
-		// config.get(Configuration.CATEGORY_GENERAL, "Render First Person Particles", default_renderFirstPersonVadeMecumParticles).set(renderFirstPersonVadeMecumParticles);
+	@Override
+	protected void loadData(boolean firstLoad) {
+
 	}
 
-	@SubscribeEvent
-	public void configChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-		if (event.getModID().equals(CosmicReality.modid)) sync(false);
+	@Override
+	protected void cleanup() throws IOException {
+
 	}
 
 }

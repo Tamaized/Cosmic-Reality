@@ -83,7 +83,7 @@ public class CosmicReality extends TamModBase {
 		logger.info("Starting CosmicReality PreInit");
 
 		configFile = event.getSuggestedConfigurationFile();
-		config = new ConfigHandler(new Configuration(configFile));
+		config = new ConfigHandler(this, configFile, new Configuration(configFile));
 
 		channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(networkChannelName);
 
