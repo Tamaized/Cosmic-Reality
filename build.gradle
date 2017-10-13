@@ -16,6 +16,10 @@ repositories {
 	maven {
 		url = "http://dvs1.progwml6.com/files/maven"
 	}
+    maven {
+        name 'progwm\'s maven' // JEI
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
 }
 
 version = "${minecraftVersion}-${modVersion}${modVersionValue}"
@@ -27,7 +31,7 @@ sourceCompatibility = 1.8
 minecraft {
     version = "${minecraftVersion}-${project.forgeVersion}"
     runDir = 'run'
-    mappings = "${forgeMapping}"
+    mappings = "${mcpMapping}"
     makeObfSourceJar = false
 	useDepAts = true
 	replaceIn 'CosmicReality.java'
