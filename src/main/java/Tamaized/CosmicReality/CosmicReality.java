@@ -7,9 +7,12 @@ import Tamaized.CosmicReality.capabilities.AttachCapabilityEvent;
 import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityHandler;
 import Tamaized.CosmicReality.capabilities.cosmic.CosmicCapabilityStorage;
 import Tamaized.CosmicReality.capabilities.cosmic.ICosmicCapability;
+import Tamaized.CosmicReality.entity.EntityPortal;
 import Tamaized.CosmicReality.event.PlayerTickEvent;
 import Tamaized.CosmicReality.handler.ConfigHandler;
 import Tamaized.CosmicReality.network.ServerPacketHandler;
+import Tamaized.CosmicReality.registry.ModCreativeTabs;
+import Tamaized.CosmicReality.registry.ModItems;
 import Tamaized.TamModized.TamModBase;
 import Tamaized.TamModized.TamModized;
 import Tamaized.TamModized.proxy.AbstractProxy;
@@ -85,6 +88,9 @@ public class CosmicReality extends TamModBase {
 		configFile = event.getSuggestedConfigurationFile();
 		config = new ConfigHandler(this, configFile, new Configuration(configFile));
 
+		register(new ModItems());
+		register(new ModCreativeTabs());
+
 		channel = NetworkRegistry.INSTANCE.newEventDrivenChannel(networkChannelName);
 
 		CapabilityManager.INSTANCE.register(ICosmicCapability.class, new CosmicCapabilityStorage(), CosmicCapabilityHandler.class);
@@ -97,6 +103,8 @@ public class CosmicReality extends TamModBase {
 		logger.info("Starting CosmicReality Init");
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+		
+		registerEntity(EntityPortal.class, "Portal", this, modid, 128, 1, true);
 
 		MinecraftForge.EVENT_BUS.register(new PlayerTickEvent());
 

@@ -19,7 +19,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderPlayer {
-	
+
 	private static ResourceLocation TEXTURE = new ResourceLocation(CosmicReality.modid, "textures/fx/ray.png");
 
 	@SubscribeEvent
@@ -29,8 +29,8 @@ public class RenderPlayer {
 		Tessellator tessellator = Tessellator.getInstance();
 		VertexBuffer vertexbuffer = tessellator.getBuffer();
 
-//		Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE);
-		
+		// Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE);
+
 		GL11.glPushMatrix();
 		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 
@@ -38,16 +38,16 @@ public class RenderPlayer {
 		GL11.glTranslated(-player.posX, -player.posY, -player.posZ);
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		
-//		player.sendMessage(new TextComponentString(""+(0x000000 >> 16 & 0xFF)));
+
+		// player.sendMessage(new TextComponentString(""+(0x000000 >> 16 & 0xFF)));
 
 		ICosmicCapability cap = player.getCapability(CapabilityList.COSMIC, null);
 		if (cap != null) {
 			for (CosmicCapabilityHandler.WingVector vec : cap.getWingList()) {
-				vec.update();
+				if (!Minecraft.getMinecraft().isGamePaused()) vec.update();
 				if (vec.getParent() != null) {
-//					player.sendMessage(new TextComponentString(Integer.toHexString(vec.getColor() >> 16 & 0xFF)));
-//					GlStateManager.color(((vec.getColor() << 0) & 0xFF) / 255F, ((vec.getColor() << 8) & 0xFF) / 255F, (vec.getColor() & 0xFF) / 255F, 1);
+					// player.sendMessage(new TextComponentString(Integer.toHexString(vec.getColor() >> 16 & 0xFF)));
+					// GlStateManager.color(((vec.getColor() << 0) & 0xFF) / 255F, ((vec.getColor() << 8) & 0xFF) / 255F, (vec.getColor() & 0xFF) / 255F, 1);
 					GlStateManager.color((vec.getColor() >> 16 & 0xFF) / 255F, (vec.getColor() >> 8 & 0xFF) / 255F, (vec.getColor() & 0xFF) / 255F, 1);
 					drawLineWithGL(tessellator, vertexbuffer, player.getPositionVector().add(vec.getParent().getRenderVector()), player.getPositionVector().add(vec.getRenderVector()));
 				}
@@ -69,7 +69,7 @@ public class RenderPlayer {
 		float oz = (blockA.xCoord - blockB.xCoord == 0 ? 0 : -1f / 16f);
 		float ox = (blockA.zCoord - blockB.zCoord == 0 ? 0 : 1f / 16f);
 		float size = 0.01F;
-		
+
 		GlStateManager.glBegin(3);
 		GL11.glVertex3d(blockA.xCoord + 0.5F, blockA.yCoord - 0.01F, blockA.zCoord + 0.5F);
 		GL11.glVertex3d(blockB.xCoord + 0.5F, blockB.yCoord - 0.01F, blockB.zCoord + 0.5F);

@@ -14,7 +14,7 @@ public class PlayerTickEvent {
 		if (e.phase == Phase.END) {
 			EntityPlayer player = e.player;
 			ICosmicCapability cap = player.getCapability(CapabilityList.COSMIC, null);
-			if (cap != null) cap.update();
+			if (cap != null) cap.update(player);
 		}
 
 	}
