@@ -7,7 +7,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
@@ -18,41 +18,37 @@ repositories {
 	}
 }
 
-version = "${project.minecraftVersion}-${modVersion}${modVersionValue}"
-group= "tamaized.CosmicReality"
-archivesBaseName = "CosmicReality"
+version = "${minecraftVersion}-${modVersion}${modVersionValue}"
+group= 'tamaized.cosmicreality'
+archivesBaseName = 'CosmicReality'
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 minecraft {
-    version = "${project.minecraftVersion}-${project.forgeVersion}"
-    runDir = "run"
-    mappings = "${project.forgeMapping}"
+    version = "${minecraftVersion}-${project.forgeVersion}"
+    runDir = 'run'
+    mappings = "${forgeMapping}"
     makeObfSourceJar = false
 	useDepAts = true
 	replaceIn 'CosmicReality.java'
 	replace '${version}', "${modVersion}${modVersionValue}"
-	replace '${tamversion}', "${project.tammodizedVersion}"
+	replace '${tamversion}', "${tammodizedVersion}"
 }
 
 dependencies {
-	deobfCompile "mezz.jei:${project.jeiVersion}:api"
-	runtime "mezz.jei:${project.jeiVersion}"
-	compile files("libs/TamModized-${project.minecraftVersion}-${project.tammodizedVersion}.jar")
+	deobfCompile "mezz.jei:${jeiVersion}:api"
+	runtime "mezz.jei:${jeiVersion}"
 }
 
 processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraftVersion
+    inputs.property 'version', modVersion + modVersionValue
+    inputs.property 'tamVersion', tammodizedVersion
 
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
 		expand([
-			'version'		: project.modVersion+""+project.modVersionValue,
-			'mcversion'		: project.minecraftVersion,
-			'fVersion'		: project.forgeVersion,
-			'tamVersion'	: project.tammodizedVersion
+			'version'		: modVersion + modVersionValue,
+			'tamVersion'	: tammodizedVersion
         ])
     }
         

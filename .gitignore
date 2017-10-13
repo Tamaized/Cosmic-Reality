@@ -1,19 +1,30 @@
-*
-!gradlew
-!gradlew.bat
-!/gradle
-!/gradle/**
-!/src/
-!/src/**
-!/libs/
-!/libs/**
-!.gitignore
-!build.gradle
-!Build.jar
-!changes.txt
-!gradle.properties
-!LICENSE
-!README.md
-!build.bat
-!setupClassPath.bat
-!setupWorkspace.bat
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+classes
+
+# my own shit
+nonPublicResources
+jource.bat
+GitJource.jar
+build.bat
+Build.jar
