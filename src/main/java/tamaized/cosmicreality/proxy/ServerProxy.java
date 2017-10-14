@@ -1,7 +1,7 @@
 package tamaized.cosmicreality.proxy;
 
-import Tamaized.TamModized.proxy.AbstractProxy;
-import net.minecraftforge.fml.relauncher.Side;
+
+import tamaized.tammodized.proxy.AbstractProxy;
 
 public class ServerProxy extends AbstractProxy {
 

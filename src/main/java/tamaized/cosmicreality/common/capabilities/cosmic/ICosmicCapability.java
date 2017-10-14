@@ -14,4 +14,8 @@ public interface ICosmicCapability {
 	
 	void debug();
 
+	int getTest(int id);
+
+	void setTest(int id, int val);
+
 }

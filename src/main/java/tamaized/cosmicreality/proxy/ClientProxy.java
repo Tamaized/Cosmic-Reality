@@ -1,15 +1,10 @@
 package tamaized.cosmicreality.proxy;
 
-import tamaized.cosmicreality.client.render.RenderMirror;
-import tamaized.cosmicreality.client.render.RenderPlayer;
-import tamaized.cosmicreality.common.entity.EntityPortal;
-import tamaized.cosmicreality.client.entity.render.RenderPortal;
-import Tamaized.TamModized.proxy.AbstractProxy;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import tamaized.cosmicreality.client.entity.render.RenderPortal;
+import tamaized.cosmicreality.common.entity.EntityPortal;
+import tamaized.tammodized.proxy.AbstractProxy;
 
 public class ClientProxy extends AbstractProxy {
 
@@ -24,15 +19,7 @@ public class ClientProxy extends AbstractProxy {
 
 	@Override
 	public void preInit() {
-		MinecraftForge.EVENT_BUS.register(new RenderPlayer());
-		MinecraftForge.EVENT_BUS.register(new RenderMirror());
-
-		RenderingRegistry.registerEntityRenderingHandler(EntityPortal.class, new IRenderFactory<EntityPortal>() {
-			@Override
-			public Render<? super EntityPortal> createRenderFor(RenderManager manager) {
-				return new RenderPortal(manager);
-			}
-		});
+		RenderingRegistry.registerEntityRenderingHandler(EntityPortal.class, RenderPortal::new);
 	}
 
 	@Override
